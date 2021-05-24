@@ -2,7 +2,8 @@
 
 namespace aiof.eventing.emitter.data
 {
-    public class Class1
+    public class EventRequest
     {
+
     }
 }
