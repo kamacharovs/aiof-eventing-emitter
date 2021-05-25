@@ -23,6 +23,10 @@ namespace aiof.eventing.emitter.data
             CreateMap<EventUser, EventLog>()
                 .ForMember(x => x.UserId, o => o.Condition(s => s.Id.HasValue))
                 .ForMember(x => x.UserPublicKey, o => o.Condition(s => s.PublicKey.HasValue));
+
+            CreateMap<EventEntity, EventLog>()
+                .ForMember(x => x.EntityId, o => o.Condition(s => s.Id.HasValue))
+                .ForMember(x => x.EntityType, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Type)));
         }
     }
 }

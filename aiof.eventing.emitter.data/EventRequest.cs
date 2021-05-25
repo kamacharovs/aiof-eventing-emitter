@@ -9,6 +9,7 @@ namespace aiof.eventing.emitter.data
         public string EventType { get; set; }
         public EventSource Source { get; set; }
         public EventUser User { get; set; }
+        public EventEntity Entity { get; set; }
 
         [JsonIgnore]
         public EventType EventTypeEnum
@@ -32,5 +33,12 @@ namespace aiof.eventing.emitter.data
     {
         public int? Id { get; set; }
         public Guid? PublicKey { get; set; }
+    }
+
+    public class EventEntity
+    {
+        public int? Id { get; set; }
+        public string Type { get; set; }
+        public object Payload { get; set; }
     }
 }

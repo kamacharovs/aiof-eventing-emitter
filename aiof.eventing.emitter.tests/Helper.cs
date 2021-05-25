@@ -76,6 +76,7 @@ namespace aiof.eventing.emitter.tests
                 .RuleFor(x => x.EventType, f => f.PickRandom<EventType>().ToString())
                 .RuleFor(x => x.Source, f => GetRandomEventSource())
                 .RuleFor(x => x.User, f => GetRandomEventUser())
+                .RuleFor(x => x.Entity, f => GetRandomEventEntity())
                 .Generate(n);
         }
 
@@ -100,6 +101,22 @@ namespace aiof.eventing.emitter.tests
             return new Faker<EventUser>()
                 .RuleFor(x => x.Id, f => f.Random.Int(1, 10000))
                 .RuleFor(x => x.PublicKey, f => Guid.NewGuid())
+                .Generate(n);
+        }
+
+        public static EventEntity GetRandomEventEntity()
+        {
+            return GetRandomEventEntities().First();
+        }
+        public static IEnumerable<EventEntity> GetRandomEventEntities(int n = 1)
+        {
+            return new Faker<EventEntity>()
+                .RuleFor(x => x.Id, f => f.Random.Int(1, 10000))
+                .RuleFor(x => x.Type, f => f.Random.String2(5, 100))
+                .RuleFor(x => x.Payload, f => new { 
+                    field1 = "field1",
+                    field2 = f.Random.Int(1000, 10000)
+                })
                 .Generate(n);
         }
         #endregion
