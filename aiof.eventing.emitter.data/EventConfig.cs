@@ -8,6 +8,12 @@ namespace aiof.eventing.emitter.data
 {
     public class EventConfig : TableEntity
     {
-        
+        public EventConfig() { }
+
+        public EventConfig(string eventType)
+        {
+            PartitionKey = eventType;
+            RowKey = Guid.NewGuid().ToString();
+        }
     }
 }

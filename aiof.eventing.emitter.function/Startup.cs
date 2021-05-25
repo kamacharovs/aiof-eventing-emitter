@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using aiof.eventing.emitter.services;
 [assembly: FunctionsStartup(typeof(aiof.eventing.emitter.function.Startup))]
 namespace aiof.eventing.emitter.function
 {
+    [ExcludeFromCodeCoverage]
     public class Startup : FunctionsStartup
     {
         private IConfiguration _config { get; set; }
@@ -29,7 +31,8 @@ namespace aiof.eventing.emitter.function
                 .AddSingleton(CloudStorageAccount.Parse(_config[Keys.StorageConnectionString]).CreateCloudTableClient(new TableClientConfiguration()));
 
             builder.Services
-                .AddScoped<IEmitterRepository, EmitterRepository>();
+                .AddScoped<IEmitterRepository, EmitterRepository>()
+                .AddScoped<IEventConfigRepository, EventConfigRepository>();
         }
     }
 }

@@ -10,12 +10,15 @@ namespace aiof.eventing.emitter.services
 {
     public class EmitterRepository : IEmitterRepository
     {
-        public readonly ILogger<EmitterRepository> _logger;
+        private readonly ILogger<EmitterRepository> _logger;
+        private readonly IEventConfigRepository _configRepo;
 
         public EmitterRepository(
-            ILogger<EmitterRepository> logger)
+            ILogger<EmitterRepository> logger,
+            IEventConfigRepository configRepo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
         }
 
         public async Task<string> EmitAsync(EventRequest req)
@@ -23,6 +26,11 @@ namespace aiof.eventing.emitter.services
             _logger.LogInformation("Event={EventType} triggered. Request={EventRequest}",
                 req.EventTypeEnum.ToString(),
                 req);
+
+            var config = await _configRepo.GetConfigAsync(req.EventTypeEnum.ToString());
+
+            if (config is null)
+                return null;
 
             return JsonSerializer.Serialize(req, Constants.JsonOptions);
         }
