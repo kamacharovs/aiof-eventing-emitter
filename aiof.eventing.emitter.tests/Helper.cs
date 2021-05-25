@@ -25,8 +25,8 @@ namespace aiof.eventing.emitter.tests
         {
             { "AzureWebJobsStorage", "UseDevelopmentStorage" },
             { "FUNCTIONS_WORKER_RUNTIME", "dotnet" },
-            { "StorageConnectionString", "DefaultEndpointsProtocol=https;AccountName=aiofeventingemitterdev;AccountKey=xwAFkkddkbG6Jh8oBc3S07EW+QeqAr6fIZuS+vcr1MTok8AELqm1fQAD9YrYaE7y2EH2ggdG01vRodIe4ZBUfA==;EndpointSuffix=core.windows.net" },
-            { "ServiceBusConnection", "Endpoint=sb://aiof-eventing-dev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=vlGIW4uo+eWKmpMGRsxnsRUqA9MKYF84SiTo78Rep2Q=" },
+            { "StorageConnectionString", "DefaultEndpointsProtocol=https;AccountName=localtests;AccountKey=localtests==;EndpointSuffix=core.windows.net" },
+            { "ServiceBusConnection", "Endpoint=sb://localtests.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=localtests" },
             { "EmitterTopicName", "emitter-topic" },
             { "EmitterConfigTableName", "EmitterConfig" },
             { "EmitterLogTableName", "EventLog" }
