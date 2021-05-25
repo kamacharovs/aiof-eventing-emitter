@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aiof.eventing.emitter.function", "aiof.eventing.emitter.function\aiof.eventing.emitter.function.csproj", "{35B5B199-B002-41BE-A123-679163D3914A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aiof.eventing.emitter.data", "aiof.eventing.emitter.data\aiof.eventing.emitter.data.csproj", "{EB179335-5A95-4CD8-97D5-50795E8E7200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aiof.eventing.emitter.data", "aiof.eventing.emitter.data\aiof.eventing.emitter.data.csproj", "{EB179335-5A95-4CD8-97D5-50795E8E7200}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aiof.eventing.emitter.services", "aiof.eventing.emitter.services\aiof.eventing.emitter.services.csproj", "{1937A921-E983-4527-A0E7-FEDA50DEEDD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EB179335-5A95-4CD8-97D5-50795E8E7200}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB179335-5A95-4CD8-97D5-50795E8E7200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB179335-5A95-4CD8-97D5-50795E8E7200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1937A921-E983-4527-A0E7-FEDA50DEEDD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1937A921-E983-4527-A0E7-FEDA50DEEDD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1937A921-E983-4527-A0E7-FEDA50DEEDD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1937A921-E983-4527-A0E7-FEDA50DEEDD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
