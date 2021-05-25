@@ -22,6 +22,7 @@ namespace aiof.eventing.emitter.data
         public const string ServiceBusConnection = nameof(ServiceBusConnection);
         public const string EmitterTopicName = nameof(EmitterTopicName);
         public const string EmitterConfigTableName = nameof(EmitterConfigTableName);
+        public const string EmitterLogTableName = nameof(EmitterLogTableName);
     }
 
     public enum EventType

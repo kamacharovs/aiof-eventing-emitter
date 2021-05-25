@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using System.Text.Json;
 
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 
@@ -23,7 +21,7 @@ namespace aiof.eventing.emitter.function
         }
 
         [FunctionName("EmitEventAsync")]
-        [return: ServiceBus("%EmitterTopicName%", Connection = "%ServiceBusConnection%")]
+        [return: ServiceBus("%EmitterTopicName%", Connection = "ServiceBusConnection")]
         public async Task<string> EmitEventAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "emit")] EventRequest req)
         {
