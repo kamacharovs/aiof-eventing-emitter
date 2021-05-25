@@ -20,5 +20,6 @@ namespace aiof.eventing.emitter.data
         public string SourceIp { get; set; }
         public int? UserId { get; set; }
         public Guid? UserPublicKey { get; set; }
+        public string Raw { get; set; }
     }
 }

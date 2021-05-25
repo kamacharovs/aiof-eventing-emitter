@@ -30,6 +30,7 @@ namespace aiof.eventing.emitter.tests
             Assert.NotNull(eventLog.SourceIp);
             Assert.NotNull(eventLog.UserId);
             Assert.NotNull(eventLog.UserPublicKey);
+            Assert.NotNull(eventLog.Raw);
         }
     }
 }

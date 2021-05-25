@@ -12,20 +12,21 @@ namespace aiof.eventing.emitter.services
     {
         private readonly ILogger<EmitterRepository> _logger;
         private readonly IEventConfigRepository _configRepo;
+        private readonly IEventLogRepository _logRepo;
 
         public EmitterRepository(
             ILogger<EmitterRepository> logger,
-            IEventConfigRepository configRepo)
+            IEventConfigRepository configRepo,
+            IEventLogRepository logRepo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
+            _logRepo = logRepo ?? throw new ArgumentNullException(nameof(logRepo));
         }
 
         public async Task<string> EmitAsync(EventRequest req)
         {
-            _logger.LogInformation("Event={EventType} triggered. Request={EventRequest}",
-                req.EventTypeEnum.ToString(),
-                req);
+            await _logRepo.LogAsync(req);
 
             var config = await _configRepo.GetConfigAsync(req.EventTypeEnum.ToString());
 

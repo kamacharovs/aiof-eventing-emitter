@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 using AutoMapper;
 
@@ -12,7 +13,8 @@ namespace aiof.eventing.emitter.data
         {
             CreateMap<EventRequest, EventLog>()
                 .ForMember(x => x.PartitionKey, o => o.MapFrom(s => s.EventTypeEnum.ToString()))
-                .ForMember(x => x.RowKey, o => o.MapFrom(s => s.EventId));
+                .ForMember(x => x.RowKey, o => o.MapFrom(s => s.EventId))
+                .ForMember(x => x.Raw, o => o.MapFrom(s => JsonSerializer.Serialize(s, Constants.JsonOptions)));
 
             CreateMap<EventSource, EventLog>()
                 .ForMember(x => x.SourceApi, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Api)))

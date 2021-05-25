@@ -32,7 +32,8 @@ namespace aiof.eventing.emitter.function
 
             builder.Services
                 .AddScoped<IEmitterRepository, EmitterRepository>()
-                .AddScoped<IEventConfigRepository, EventConfigRepository>();
+                .AddScoped<IEventConfigRepository, EventConfigRepository>()
+                .AddScoped<IEventLogRepository, EventLogRepository>();
         }
     }
 }

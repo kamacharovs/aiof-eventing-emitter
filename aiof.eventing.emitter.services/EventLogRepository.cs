@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text.Json;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -14,15 +15,15 @@ using aiof.eventing.emitter.data;
 
 namespace aiof.eventing.emitter.services
 {
-    public class EventConfigRepository : IEventConfigRepository
+    public class EventLogRepository : IEventLogRepository
     {
-        private readonly ILogger<EventConfigRepository> _logger;
+        private readonly ILogger<EventLogRepository> _logger;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
         private readonly CloudTableClient _client;
 
-        public EventConfigRepository(
-            ILogger<EventConfigRepository> logger,
+        public EventLogRepository(
+            ILogger<EventLogRepository> logger,
             IMapper mapper,
             IConfiguration config,
             CloudTableClient client)
@@ -33,26 +34,32 @@ namespace aiof.eventing.emitter.services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public async Task<EventConfig> GetConfigAsync(string eventType)
+        public async Task LogAsync(EventRequest req)
         {
-            var table = _client.GetTableReference(_config[Keys.EmitterConfigTableName]);
-            var eventTypeFilter = TableQuery.GenerateFilterCondition(nameof(EventConfig.PartitionKey), QueryComparisons.Equal, eventType);
-            var query = new TableQuery<EventConfig>().Where(eventTypeFilter);
+            var eventLog = _mapper.Map<EventLog>(req);
+
+            await InsertAsync(eventLog);
+        }
+
+        public async Task InsertAsync(EventLog log)
+        {
+            if (log == null)
+            {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            var tableName = _config[Keys.EmitterLogTableName];
+            var table = _client.GetTableReference(tableName);
+            var insertOperation = TableOperation.Insert(log);
 
             try
             {
-                return await Task.Run(() =>
-                {
-                    return table.ExecuteQuery(query)
-                        .FirstOrDefault();
-                });
+                await table.ExecuteAsync(insertOperation);
             }
             catch (StorageException se)
             {
-                _logger.LogError(se, $"{nameof(GetConfigAsync)} storage query exception. Message={se.Message}. Filter={eventTypeFilter}");
+                _logger.LogError(se, $"{nameof(InsertAsync)} storage insert exception. Message={se.Message}");
             }
-
-            return null;
         }
     }
 }
