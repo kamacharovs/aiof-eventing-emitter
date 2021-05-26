@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace aiof.eventing.emitter.data
 {
     public static class Constants
     {
-        public static JsonSerializerOptions JsonOptions =>
-            new JsonSerializerOptions
+        public static JsonSerializerSettings JsonSettings =>
+            new JsonSerializerSettings
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                IgnoreNullValues = true
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
             };
     }
 

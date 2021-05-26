@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+
+using Newtonsoft.Json;
 
 namespace aiof.eventing.emitter.data
 {

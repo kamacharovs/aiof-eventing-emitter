@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Text.Json;
 
 using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
 
 using aiof.eventing.emitter.data;
 
@@ -33,7 +34,7 @@ namespace aiof.eventing.emitter.services
             if (config is null)
                 return null;
 
-            return JsonSerializer.Serialize(req, Constants.JsonOptions);
+            return JsonConvert.SerializeObject(req, Constants.JsonSettings);
         }
     }
 }

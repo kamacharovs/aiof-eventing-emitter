@@ -22,6 +22,7 @@ namespace aiof.eventing.emitter.data
         public Guid? UserPublicKey { get; set; }
         public int? EntityId { get; set; }
         public string EntityType { get; set; }
+        public string EntityPayload { get; set; }
         public string Raw { get; set; }
     }
 }

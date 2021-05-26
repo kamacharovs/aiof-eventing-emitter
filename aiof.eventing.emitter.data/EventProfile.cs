@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
+//using System.Text.Json;
+
+using Newtonsoft.Json;
 
 using AutoMapper;
 
@@ -14,7 +16,7 @@ namespace aiof.eventing.emitter.data
             CreateMap<EventRequest, EventLog>()
                 .ForMember(x => x.PartitionKey, o => o.MapFrom(s => s.EventTypeEnum.ToString()))
                 .ForMember(x => x.RowKey, o => o.MapFrom(s => s.EventId))
-                .ForMember(x => x.Raw, o => o.MapFrom(s => JsonSerializer.Serialize(s, Constants.JsonOptions)));
+                .ForMember(x => x.Raw, o => o.MapFrom(s => JsonConvert.SerializeObject(s, Constants.JsonSettings)));
 
             CreateMap<EventSource, EventLog>()
                 .ForMember(x => x.SourceApi, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Api)))
@@ -26,7 +28,8 @@ namespace aiof.eventing.emitter.data
 
             CreateMap<EventEntity, EventLog>()
                 .ForMember(x => x.EntityId, o => o.Condition(s => s.Id.HasValue))
-                .ForMember(x => x.EntityType, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Type)));
+                .ForMember(x => x.EntityType, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Type)))
+                .ForMember(x => x.EntityPayload, o => o.MapFrom(s => JsonConvert.SerializeObject(s.Payload, Constants.JsonSettings)));
         }
     }
 }
