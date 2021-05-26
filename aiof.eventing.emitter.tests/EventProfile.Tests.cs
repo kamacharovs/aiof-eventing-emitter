@@ -32,6 +32,7 @@ namespace aiof.eventing.emitter.tests
             Assert.NotNull(eventLog.UserPublicKey);
             Assert.NotNull(eventLog.EntityId);
             Assert.NotNull(eventLog.EntityType);
+            Assert.NotNull(eventLog.EntityPayload);
             Assert.NotNull(eventLog.Raw);
         }
     }
