@@ -9,7 +9,7 @@ namespace aiof.eventing.emitter.tests
 {
     public class EventProfileTests
     {
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public EventProfileTests()
         {
