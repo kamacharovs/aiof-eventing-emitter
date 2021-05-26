@@ -19,16 +19,16 @@ namespace aiof.eventing.emitter.data
                 .ForMember(x => x.Raw, o => o.MapFrom(s => JsonConvert.SerializeObject(s, Constants.JsonSettings)));
 
             CreateMap<EventSource, EventLog>()
-                .ForMember(x => x.SourceApi, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Api)))
-                .ForMember(x => x.SourceIp, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Ip)));
+                .ForMember(x => x.SourceApi, o => o.MapFrom(s => s.Api))
+                .ForMember(x => x.SourceIp, o => o.MapFrom(s => s.Ip));
 
             CreateMap<EventUser, EventLog>()
-                .ForMember(x => x.UserId, o => o.Condition(s => s.Id.HasValue))
-                .ForMember(x => x.UserPublicKey, o => o.Condition(s => s.PublicKey.HasValue));
+                .ForMember(x => x.UserId, o => o.MapFrom(s => s.Id))
+                .ForMember(x => x.UserPublicKey, o => o.MapFrom(s => s.PublicKey));
 
             CreateMap<EventEntity, EventLog>()
-                .ForMember(x => x.EntityId, o => o.Condition(s => s.Id.HasValue))
-                .ForMember(x => x.EntityType, o => o.Condition(s => !string.IsNullOrWhiteSpace(s.Type)))
+                .ForMember(x => x.EntityId, o => o.MapFrom(s => s.Id))
+                .ForMember(x => x.EntityType, o => o.MapFrom(s => s.Type))
                 .ForMember(x => x.EntityPayload, o => o.MapFrom(s => JsonConvert.SerializeObject(s.Payload, Constants.JsonSettings)));
         }
     }

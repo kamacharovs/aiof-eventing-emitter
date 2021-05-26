@@ -23,7 +23,7 @@ namespace aiof.eventing.emitter.function
         [FunctionName("EmitEventAsync")]
         [return: ServiceBus("%EmitterTopicName%", Connection = "ServiceBusConnection")]
         public async Task<string> EmitEventAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "emit")] EventRequest req)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emit")] EventRequest req)
         {
             return await _repo.EmitAsync(req);
         }

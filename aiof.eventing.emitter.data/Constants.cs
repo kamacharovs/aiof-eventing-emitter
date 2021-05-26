@@ -13,7 +13,6 @@ namespace aiof.eventing.emitter.data
         public static JsonSerializerSettings JsonSettings =>
             new JsonSerializerSettings
             {
-                Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
                 ContractResolver = new DefaultContractResolver
                 {

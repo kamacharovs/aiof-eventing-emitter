@@ -65,12 +65,15 @@ namespace aiof.eventing.emitter.tests
         }
 
         #region UnitTests
-
+        public static IEnumerable<object[]> EventRequests()
+        {
+            return GetRandomEventRequests().ToObjectArray();
+        }
         public static EventRequest GetRandomEventRequest()
         {
-            return GetRandomEventRequests().First();
+            return GetRandomEventRequests(1).First();
         }
-        public static IEnumerable<EventRequest> GetRandomEventRequests(int n = 1)
+        public static IEnumerable<EventRequest> GetRandomEventRequests(int n = 3)
         {
             return new Faker<EventRequest>()
                 .RuleFor(x => x.EventType, f => f.PickRandom<EventType>().ToString())
@@ -80,11 +83,15 @@ namespace aiof.eventing.emitter.tests
                 .Generate(n);
         }
 
+        public static IEnumerable<object[]> EventSources()
+        {
+            return GetRandomEventSources().ToObjectArray();
+        }
         public static EventSource GetRandomEventSource()
         {
-            return GetRandomEventSources().First();
+            return GetRandomEventSources(1).First();
         }
-        public static IEnumerable<EventSource> GetRandomEventSources(int n = 1)
+        public static IEnumerable<EventSource> GetRandomEventSources(int n = 3)
         {
             return new Faker<EventSource>()
                 .RuleFor(x => x.Api, f => f.Internet.Url())
@@ -92,11 +99,15 @@ namespace aiof.eventing.emitter.tests
                 .Generate(n);
         }
 
+        public static IEnumerable<object[]> EventUsers()
+        {
+            return GetRandomEventUsers().ToObjectArray();
+        }
         public static EventUser GetRandomEventUser()
         {
-            return GetRandomEventUsers().First();
+            return GetRandomEventUsers(1).First();
         }
-        public static IEnumerable<EventUser> GetRandomEventUsers(int n = 1)
+        public static IEnumerable<EventUser> GetRandomEventUsers(int n = 3)
         {
             return new Faker<EventUser>()
                 .RuleFor(x => x.Id, f => f.Random.Int(1, 10000))
@@ -104,11 +115,15 @@ namespace aiof.eventing.emitter.tests
                 .Generate(n);
         }
 
+        public static IEnumerable<object[]> EventEntities()
+        {
+            return GetRandomEventEntities().ToObjectArray();
+        }
         public static EventEntity GetRandomEventEntity()
         {
-            return GetRandomEventEntities().First();
+            return GetRandomEventEntities(1).First();
         }
-        public static IEnumerable<EventEntity> GetRandomEventEntities(int n = 1)
+        public static IEnumerable<EventEntity> GetRandomEventEntities(int n = 3)
         {
             return new Faker<EventEntity>()
                 .RuleFor(x => x.Id, f => f.Random.Int(1, 10000))
