@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Azure.Messaging.ServiceBus;
+using Microsoft.AspNetCore.Mvc;
 
 using aiof.eventing.emitter.data;
 using aiof.eventing.emitter.services;
@@ -12,20 +14,27 @@ namespace aiof.eventing.emitter.function
 {
     public class HttpTriggers
     {
-        public readonly IEmitterRepository _repo;
+        private readonly IEmitterRepository _repo;
+        private readonly ServiceBusSender _sender;
 
         public HttpTriggers(
-            IEmitterRepository repo)
+            IEmitterRepository repo,
+            ServiceBusSender sender)
         {
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            _sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
         [FunctionName("EmitEventAsync")]
-        [return: ServiceBus("%EmitterTopicName%", Connection = "ServiceBusConnection")]
-        public async Task<string> EmitEventAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "emit")] EventRequest req)
+        public async Task<IActionResult> EmitEventAsync(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emit")] EventRequest req)
         {
-            return await _repo.EmitAsync(req);
+            var serviceBusMessage = await _repo.EmitAsync(req);
+
+            if (serviceBusMessage != null)
+                await _sender.SendMessageAsync(serviceBusMessage);
+
+            return new OkResult();
         }
     }
 }
