@@ -10,6 +10,8 @@ namespace aiof.eventing.emitter.data
 {
     public static class Constants
     {
+        public const string ApplicationJson = "application/json";
+
         public static JsonSerializerSettings JsonSettings =>
             new JsonSerializerSettings
             {

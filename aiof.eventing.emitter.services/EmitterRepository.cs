@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
+using Azure.Messaging.ServiceBus;
 
 using Newtonsoft.Json;
 
@@ -25,7 +26,7 @@ namespace aiof.eventing.emitter.services
             _logRepo = logRepo ?? throw new ArgumentNullException(nameof(logRepo));
         }
 
-        public async Task<string> EmitAsync(EventRequest req)
+        public async Task<ServiceBusMessage> EmitAsync(EventRequest req)
         {
             await _logRepo.LogAsync(req);
 
@@ -34,7 +35,14 @@ namespace aiof.eventing.emitter.services
             if (config is null)
                 return null;
 
-            return JsonConvert.SerializeObject(req, Constants.JsonSettings);
+            var reqStr = JsonConvert.SerializeObject(req, Constants.JsonSettings);
+            var message = new ServiceBusMessage(reqStr)
+            {
+                ContentType = Constants.ApplicationJson
+            };
+            message.ApplicationProperties.Add(nameof(req.EventType), req.EventTypeEnum.ToString());
+
+            return message;
         }
     }
 }
