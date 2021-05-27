@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Azure.Messaging.ServiceBus;
 
 using Newtonsoft.Json;
+using AutoMapper;
 
 using aiof.eventing.emitter.data;
 
@@ -13,15 +14,18 @@ namespace aiof.eventing.emitter.services
     public class EmitterRepository : IEmitterRepository
     {
         private readonly ILogger<EmitterRepository> _logger;
+        private readonly IMapper _mapper;
         private readonly IEventConfigRepository _configRepo;
         private readonly IEventLogRepository _logRepo;
 
         public EmitterRepository(
             ILogger<EmitterRepository> logger,
+            IMapper mapper,
             IEventConfigRepository configRepo,
             IEventLogRepository logRepo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _configRepo = configRepo ?? throw new ArgumentNullException(nameof(configRepo));
             _logRepo = logRepo ?? throw new ArgumentNullException(nameof(logRepo));
         }
@@ -35,11 +39,8 @@ namespace aiof.eventing.emitter.services
             if (config is null)
                 return null;
 
-            var reqStr = JsonConvert.SerializeObject(req, Constants.JsonSettings);
-            var message = new ServiceBusMessage(reqStr)
-            {
-                ContentType = Constants.ApplicationJson
-            };
+            var message = _mapper.MergeInto<ServiceBusMessage>(req, config);
+
             message.ApplicationProperties.Add(nameof(EventRequest.EventType), req.EventTypeEnum.ToString());
 
             return message;

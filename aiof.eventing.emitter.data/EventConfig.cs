@@ -15,5 +15,7 @@ namespace aiof.eventing.emitter.data
             PartitionKey = eventType;
             RowKey = Guid.NewGuid().ToString();
         }
+
+        public string Subject { get; set; }
     }
 }

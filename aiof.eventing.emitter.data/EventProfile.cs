@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Azure.Messaging.ServiceBus;
+
 using Newtonsoft.Json;
 using AutoMapper;
 
@@ -11,6 +13,12 @@ namespace aiof.eventing.emitter.data
     {
         public EventProfile()
         {
+            CreateMap<EventRequest, ServiceBusMessage>()
+                .ForMember(x => x.ContentType, o => o.MapFrom(s => Constants.ApplicationJson))
+                .ForMember(x => x.Body, o => o.MapFrom(s => new BinaryData(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(s, Constants.JsonSettings)))));
+            CreateMap<EventConfig, ServiceBusMessage>()
+                .ForMember(x => x.Subject, o => o.MapFrom(s => s.Subject));
+
             CreateMap<EventRequest, EventLog>()
                 .ForMember(x => x.PartitionKey, o => o.MapFrom(s => s.EventTypeEnum.ToString()))
                 .ForMember(x => x.RowKey, o => o.MapFrom(s => s.EventId))

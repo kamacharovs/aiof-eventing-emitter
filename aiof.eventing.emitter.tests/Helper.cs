@@ -70,9 +70,11 @@ namespace aiof.eventing.emitter.tests
         public static IEmitterRepository GetEmitterRepository(string eventType)
         {
             var logger = GetRequiredService<ILogger<EmitterRepository>>();
+            var mapper = GetRequiredService<IMapper>();
 
             return new EmitterRepository(
                 logger: logger,
+                mapper: mapper,
                 configRepo: GetEventConfigRepository(eventType),
                 logRepo: GetEventLogRepository(eventType));
         }
