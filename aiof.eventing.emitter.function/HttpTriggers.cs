@@ -29,7 +29,10 @@ namespace aiof.eventing.emitter.function
         public async Task<IActionResult> EmitEventAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emit")] EventRequest req)
         {
-            await _sender.SendMessageAsync(await _repo.EmitAsync(req));
+            var serviceBusMessage = await _repo.EmitAsync(req);
+
+            if (serviceBusMessage != null)
+                await _sender.SendMessageAsync(serviceBusMessage);
 
             return new OkResult();
         }

@@ -40,7 +40,7 @@ namespace aiof.eventing.emitter.services
             {
                 ContentType = Constants.ApplicationJson
             };
-            message.ApplicationProperties.Add(nameof(req.EventType), req.EventTypeEnum.ToString());
+            message.ApplicationProperties.Add(nameof(EventRequest.EventType), req.EventTypeEnum.ToString());
 
             return message;
         }
