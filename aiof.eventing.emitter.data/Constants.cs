@@ -33,6 +33,8 @@ namespace aiof.eventing.emitter.data
     public enum EventType
     {
         NoMatch,
-        AssetAdded
+        AssetAdded,
+        AssetUpdated,
+        AssetDeleted
     }
 }

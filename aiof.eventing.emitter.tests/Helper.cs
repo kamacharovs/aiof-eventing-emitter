@@ -226,7 +226,9 @@ namespace aiof.eventing.emitter.tests
         {
             return new List<object[]>
             {
-                new object[] { EventType.AssetAdded.ToString() }
+                new object[] { EventType.AssetAdded.ToString() },
+                new object[] { EventType.AssetUpdated.ToString() },
+                new object[] { EventType.AssetDeleted.ToString() }
             };
         }
         #endregion
