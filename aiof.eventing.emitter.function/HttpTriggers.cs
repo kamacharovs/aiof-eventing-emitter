@@ -14,29 +14,22 @@ namespace aiof.eventing.emitter.function
 {
     public class HttpTriggers
     {
-        private readonly IConfiguration _config;
         private readonly IEmitterRepository _repo;
+        private readonly ServiceBusSender _sender;
 
         public HttpTriggers(
-            IConfiguration config,
-            IEmitterRepository repo)
+            IEmitterRepository repo,
+            ServiceBusSender sender)
         {
-            _config = config;
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            _sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
         [FunctionName("EmitEventAsync")]
         public async Task EmitEventAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emit")] EventRequest req)
         {
-            await using (var client = new ServiceBusClient(_config[Keys.ServiceBusConnection]))
-            {
-                // create a sender for the queue 
-                var sender = client.CreateSender(_config[Keys.EmitterTopicName]);
-
-                // send the message
-                await sender.SendMessageAsync(await _repo.EmitAsync(req));
-            }
+            await _sender.SendMessageAsync(await _repo.EmitAsync(req));
         }
     }
 }
