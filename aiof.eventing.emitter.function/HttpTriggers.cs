@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Azure.Messaging.ServiceBus;
+using Microsoft.AspNetCore.Mvc;
 
 using aiof.eventing.emitter.data;
 using aiof.eventing.emitter.services;
@@ -26,10 +26,12 @@ namespace aiof.eventing.emitter.function
         }
 
         [FunctionName("EmitEventAsync")]
-        public async Task EmitEventAsync(
+        public async Task<IActionResult> EmitEventAsync(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emit")] EventRequest req)
         {
             await _sender.SendMessageAsync(await _repo.EmitAsync(req));
+
+            return new OkResult();
         }
     }
 }

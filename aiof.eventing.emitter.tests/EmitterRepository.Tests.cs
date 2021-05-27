@@ -4,11 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xunit;
-using AutoMapper;
 using Newtonsoft.Json;
 
 using aiof.eventing.emitter.data;
-using aiof.eventing.emitter.services;
 
 namespace aiof.eventing.emitter.tests
 {
@@ -27,7 +25,7 @@ namespace aiof.eventing.emitter.tests
 
             Assert.NotNull(eventMessage);
 
-            var eventMessageRequest = JsonConvert.DeserializeObject<EventRequest>(eventMessage);
+            var eventMessageRequest = JsonConvert.DeserializeObject<EventRequest>(Encoding.UTF8.GetString(eventMessage.Body));
 
             Assert.NotNull(eventMessageRequest);
             Assert.NotNull(eventMessageRequest.EventId);
