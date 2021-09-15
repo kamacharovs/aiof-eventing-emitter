@@ -34,13 +34,14 @@ namespace aiof.eventing.emitter.services
         {
             await _logRepo.LogAsync(req);
 
-            var config = await _configRepo.GetConfigAsync(req.EventType));
+            var config = await _configRepo.GetConfigAsync(req.EventType);
 
             if (config is null)
                 return null;
 
             var message = _mapper.MergeInto<ServiceBusMessage>(req, config);
 
+            message.ApplicationProperties.Add(nameof(EventRequest.EventId), req.EventId);
             message.ApplicationProperties.Add(nameof(EventRequest.EventType), req.EventType);
 
             return message;
