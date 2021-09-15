@@ -20,7 +20,7 @@ namespace aiof.eventing.emitter.data
                 .ForMember(x => x.Subject, o => o.MapFrom(s => s.Subject));
 
             CreateMap<EventRequest, EventLog>()
-                .ForMember(x => x.PartitionKey, o => o.MapFrom(s => s.EventTypeEnum.ToString()))
+                .ForMember(x => x.PartitionKey, o => o.MapFrom(s => s.EventType))
                 .ForMember(x => x.RowKey, o => o.MapFrom(s => s.EventId))
                 .ForMember(x => x.Raw, o => o.MapFrom(s => JsonConvert.SerializeObject(s, Constants.JsonSettings)));
 

@@ -11,17 +11,6 @@ namespace aiof.eventing.emitter.data
         public EventSource Source { get; set; }
         public EventUser User { get; set; }
         public EventEntity Entity { get; set; }
-
-        [JsonIgnore]
-        public EventType EventTypeEnum
-        {
-            get
-            {
-                Enum.TryParse<EventType>(EventType, out var EventTypeEnum);
-
-                return EventTypeEnum;
-            }
-        }
     }
 
     public class EventSource
