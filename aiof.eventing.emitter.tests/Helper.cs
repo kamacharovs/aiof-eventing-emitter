@@ -153,6 +153,13 @@ namespace aiof.eventing.emitter.tests
         }
 
         #region UnitTests
+        public static List<string> EventTypesList = new List<string>
+        {
+            "AssetAdded",
+            "AssetUpdated",
+            "AssetDeleted"
+        };
+
         public static IEnumerable<object[]> EventRequests()
         {
             return GetRandomEventRequests().ToObjectArray();
@@ -164,7 +171,7 @@ namespace aiof.eventing.emitter.tests
         public static IEnumerable<EventRequest> GetRandomEventRequests(int n = 3)
         {
             return new Faker<EventRequest>()
-                .RuleFor(x => x.EventType, f => f.PickRandom<EventType>().ToString())
+                .RuleFor(x => x.EventType, f => EventTypesList[f.Random.Int(0, EventTypesList.Count() - 1)])
                 .RuleFor(x => x.Source, f => GetRandomEventSource())
                 .RuleFor(x => x.User, f => GetRandomEventUser())
                 .RuleFor(x => x.Entity, f => GetRandomEventEntity())
@@ -228,9 +235,9 @@ namespace aiof.eventing.emitter.tests
         {
             return new List<object[]>
             {
-                new object[] { EventType.AssetAdded.ToString() },
-                new object[] { EventType.AssetUpdated.ToString() },
-                new object[] { EventType.AssetDeleted.ToString() }
+                new object[] { "AssetAdded" },
+                new object[] { "AssetUpdated" },
+                new object[] { "AssetDeleted" }
             };
         }
         #endregion

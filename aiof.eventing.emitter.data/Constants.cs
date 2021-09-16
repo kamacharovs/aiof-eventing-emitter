@@ -31,12 +31,4 @@ namespace aiof.eventing.emitter.data
         public const string EmitterConfigTableName = nameof(EmitterConfigTableName);
         public const string EmitterLogTableName = nameof(EmitterLogTableName);
     }
-
-    public enum EventType
-    {
-        NoMatch,
-        AssetAdded,
-        AssetUpdated,
-        AssetDeleted
-    }
 }

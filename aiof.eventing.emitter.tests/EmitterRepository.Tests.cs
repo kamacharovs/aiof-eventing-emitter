@@ -33,7 +33,7 @@ namespace aiof.eventing.emitter.tests
             Assert.NotNull(eventMessageRequest.Source);
             Assert.NotNull(eventMessageRequest.User);
             Assert.NotNull(eventMessageRequest.Entity);
-            Assert.Equal(eventType, eventMessageRequest.EventTypeEnum.ToString());
+            Assert.Equal(eventType, eventMessageRequest.EventType);
         }
     }
 }
